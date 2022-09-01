@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterControl : MonoBehaviour
 {
     public Transform mermiPos;
     public GameObject mermi;
+    public Image canImaji;
+    private float canDegeri = 100f;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,4 +26,16 @@ public class CharacterControl : MonoBehaviour
 
         }
     }
+    private void OnCollisionEnter(Collision c)
+    {
+        if (c.collider.gameObject.tag.Equals("zombi"))
+        {
+            Debug.Log("Zombi saldýrdý");
+            canDegeri -= 10f;
+            float x = canDegeri / 100f;
+            canImaji.fillAmount = x;
+            canImaji.color = Color.Lerp(Color.red, Color.green, x);
+        }
+    }
+
 }
