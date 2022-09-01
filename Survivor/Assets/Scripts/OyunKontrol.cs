@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OyunKontrol : MonoBehaviour
 {
     public GameObject zombi;
     private float zamanSayaci;
     private float olusumSureci = 5f;
+    public Text puanText;
+    private int puan;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,4 +29,11 @@ public class OyunKontrol : MonoBehaviour
         }
 
     }
+
+    public void PuanArtir (int p)
+    {
+        puan += p;
+        puanText.text = "" + puan;
+    }
+
 }

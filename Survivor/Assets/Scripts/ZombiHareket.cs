@@ -7,11 +7,14 @@ public class ZombiHareket : MonoBehaviour
 {
     private GameObject oyuncu;
     private int zombieCan = 3;
+    private int zombidenGelenPuan = 10;
     private float mesafe;
+    private OyunKontrol oKontrol;
     // Start is called before the first frame update
     void Start()
     {
         oyuncu = GameObject.Find("FPSController");
+        oKontrol = GameObject.Find("_Script").GetComponent<OyunKontrol>();
     }
 
     // Update is called once per frame
@@ -20,7 +23,7 @@ public class ZombiHareket : MonoBehaviour
         GetComponent<NavMeshAgent>().destination = oyuncu.transform.position;
         mesafe = Vector3.Distance(transform.position, oyuncu.transform.position);
 
-        if (mesafe < 10f)
+        if (mesafe < 4f)
         {
             GetComponentInChildren<Animation>().Play("Zombie_Attack_01");
         }
@@ -34,6 +37,7 @@ public class ZombiHareket : MonoBehaviour
             zombieCan--;
             if (zombieCan < 1)
             {
+                oKontrol.PuanArtir(zombidenGelenPuan);
                 GetComponentInChildren<Animation>().Play("Zombie_Death_01");
                 Destroy(this.gameObject, 1.667f);
             }
