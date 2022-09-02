@@ -9,6 +9,7 @@ public class CharacterControl : MonoBehaviour
     public GameObject mermi;
     public Image canImaji;
     private float canDegeri = 100f;
+    public OyunKontrol oKontrol;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +22,7 @@ public class CharacterControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             GameObject go = Instantiate(mermi, mermiPos.position, mermiPos.rotation);
-            go.GetComponent<Rigidbody>().velocity = mermiPos.transform.forward*10f;
+            go.GetComponent<Rigidbody>().velocity = mermiPos.transform.forward*20f;
             Destroy(go.gameObject, 2f);
 
         }
@@ -35,6 +36,10 @@ public class CharacterControl : MonoBehaviour
             float x = canDegeri / 100f;
             canImaji.fillAmount = x;
             canImaji.color = Color.Lerp(Color.red, Color.green, x);
+            if (canDegeri <= 0)
+            {
+                oKontrol.OyunBitti();
+            }
         }
     }
 

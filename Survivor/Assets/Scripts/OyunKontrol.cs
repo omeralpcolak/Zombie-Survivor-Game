@@ -35,5 +35,8 @@ public class OyunKontrol : MonoBehaviour
         puan += p;
         puanText.text = "" + puan;
     }
-
+    public void OyunBitti()
+    {
+        PlayerPrefs.SetInt("puan",puan);
+    }
 }
