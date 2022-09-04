@@ -10,9 +10,12 @@ public class ZombiHareket : MonoBehaviour
     private int zombidenGelenPuan = 10;
     private float mesafe;
     private OyunKontrol oKontrol;
+    private AudioSource aSource;
+    private bool zombieOluyor = false;
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        aSource = GetComponent<AudioSource>();
         oyuncu = GameObject.Find("FPSController");
         oKontrol = GameObject.Find("_Script").GetComponent<OyunKontrol>();
     }
@@ -23,9 +26,17 @@ public class ZombiHareket : MonoBehaviour
         GetComponent<NavMeshAgent>().destination = oyuncu.transform.position;
         mesafe = Vector3.Distance(transform.position, oyuncu.transform.position);
 
-        if (mesafe < 4f)
-        {
+        if (mesafe < 10f)
+        {   
+            if (!aSource.isPlaying)
+            aSource.Play();
+            if (!zombieOluyor)
             GetComponentInChildren<Animation>().Play("Zombie_Attack_01");
+        }
+        else
+        {
+            if (aSource.isPlaying)
+                aSource.Stop();
         }
     }
 
@@ -35,8 +46,9 @@ public class ZombiHareket : MonoBehaviour
         {
             Debug.Log("Çarpýþma Gerçekleþti");
             zombieCan--;
-            if (zombieCan < 1)
+            if (zombieCan == 0)
             {
+                zombieOluyor = true;
                 oKontrol.PuanArtir(zombidenGelenPuan);
                 GetComponentInChildren<Animation>().Play("Zombie_Death_01");
                 Destroy(this.gameObject, 1.667f);
